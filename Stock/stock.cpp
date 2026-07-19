@@ -1,7 +1,6 @@
-
 #include <bits/stdc++.h>
 using namespace std;
-
+// Class 
 class Product {
 public:
     string code; 
@@ -9,7 +8,15 @@ public:
     int quantity;
     double price;
 
-    Product() {}
+    // Default 
+    Product() {
+        code = "";
+        name = "";
+        quantity = 0;
+        price = 0.0;
+    }
+
+    // parameter
     Product(string c, string n, int q, double p) {
         code = c;
         name = n;
@@ -22,7 +29,10 @@ class StockManager {
 private:
     vector<Product> products;
 
-    bool codeExists(string code) {
+     // product code 
+     // if p.code  != code  
+     // left  and exit program
+    bool codeLeft(string code) {
         for (const auto& p : products) {
             if (p.code == code) return true;
         }
@@ -36,11 +46,13 @@ public:
         double price;
         string code;
 
+        // auto gen
         do {
-            int randomNum = 1004 + rand() % 9000;
-            code = to_string(randomNum);
-        } while (codeExists(code));
-        cin.ignore(); 
+            int coderan = 10000 + rand() % 90000;
+            code = to_string(coderan);
+        } while (codeLeft(code));
+
+        cin.ignore();  // clear 
         cout << "Product Name: ";
         getline(cin, name);
 
@@ -49,10 +61,10 @@ public:
 
         cout << "Price: $";
         cin >> price;
-        std::cout << "Product code : " << code << endl; 
-        products.push_back(Product(code, name, qty, price));
 
-        cout << "Product Added Successfully!\n";
+        // psuh all item of product 
+        products.push_back(Product(code, name, qty, price));
+        cout << "Product  Code: " << code << endl ; 
     }
 
     void removeProduct() {
@@ -60,10 +72,11 @@ public:
         cout << "\nEnter Product Code: ";
         cin >> code;
 
-        for (auto it = products.begin(); it != products.end(); it++) {
-            if (it->code == code) {
-                products.erase(it);
-                cout << "Product Removed!\n";
+        // auto data type 
+        for (auto PR = products.begin(); PR != products.end(); PR++) {
+            if (PR->code == code) {
+                products.erase(PR); 
+                cout << "Product Removed "<<endl ; 
                 return;
             }
         }
@@ -77,16 +90,17 @@ public:
         cout << "\nEnter Product Code: ";
         cin >> code;
 
+        // vector loop 
         for (auto& p : products) {
             if (p.code == code) {
                 cout << "Add Quantity: ";
                 cin >> amount;
                 p.quantity += amount;
-                cout << "Stock Updated!\n";
+                cout << "Stock Updated!"<<endl; 
                 return;
             }
         }
-        cout << "Product Not Found!\n";
+        cout << "Product Not Found!"<<endl; 
     }
 
     void sellProduct() {
@@ -96,35 +110,38 @@ public:
         cout << "\nEnter Product Code: ";
         cin >> code;
 
+        // use auto data type 
         for (auto& p : products) {
             if (p.code == code) {
                 cout << "Quantity Sold: ";
                 cin >> amount;
 
+
                 if (amount > p.quantity) {
                     cout << "Not Enough Stock!\n";
                     return;
                 }
+                 // qty of product - ammount 
                 p.quantity -= amount;
-                cout << "Sale Completed!\n";
+                cout << "Sale Success !\n";
                 return;
             }
         }
-        cout << "Product Not Found!\n";
+        cout << "Product Not Found!"<<endl ; 
     }
 
     void searchProduct() {
         string code;
-        cout << "\nEnter Product Code to Search: ";
+        cout << "\nEnter Product Code: ";
         cin >> code;
 
         for (auto& p : products) {
             if (p.code == code) {
-                cout << "\n--- Product Found ---";
-                cout << "\nCode: " << p.code;
-                cout << "\nName: " << p.name;
-                cout << "\nQuantity: " << p.quantity;
-                cout << "\nPrice: $" << fixed << setprecision(2) << p.price << endl;
+                cout << "\n--- Product Found ---"
+                     << "\nProuduct Code:     " << p.code
+                     << "\nName:     " << p.name
+                     << "\nQuantity: " << p.quantity
+                     << "\nPrice:    $" << fixed << setprecision(2) << p.price << "\n";
                 return;
             }
         }
@@ -133,43 +150,43 @@ public:
 
     void listProducts() {
         if (products.empty()) {
-            cout << "\nNo Products Available.\n";
-            return;
+            cout << "\nProduct not Available !"<<endl; 
+            return ; 
         }
 
         cout << "\n" << left
-            << setw(19) << "Code"
-            << setw(29) << "Name"
-            << setw(19) << "Quantity"
-            << setw(19) << "Price" << endl;
-        cout << string(77, '-') << endl;
+             << setw(15) << "Product Code"
+             << setw(20) << "Name"
+             << setw(15) << "Quantity"
+             << setw(15) << "Price" << "\n";
+        cout << string(60, '-') << endl; 
 
-        int totalQuantity = 0;
-        double totalValue = 0.0;
+        int totalQty = 0;
+        double totalVal = 0.0;
 
         for (auto& p : products) {
             cout << left
-                << setw(19) << p.code
-                << setw(29) << p.name
-                << setw(19) << p.quantity
-                << "$" << fixed << setprecision(2) << p.price << endl;
+                 << setw(15) << p.code
+                 << setw(20) << p.name
+                 << setw(15) << p.quantity
+                 << "$" << fixed << setprecision(2) << p.price << "\n";
 
-            totalQuantity += p.quantity;
-            totalValue += (p.quantity * p.price);
+            totalQty += p.quantity;
+            totalVal += (p.quantity * p.price);
         }
 
-        cout << string(77, '-') << endl;
+        cout << string(60, '-') << "\n";
         cout << left
-            << setw(48) << "TOTAL"
-            << setw(19) << totalQuantity
-            << "$" << fixed << setprecision(2) << totalValue << endl;
-        cout << string(77, '-') << endl;
+             << setw(35) << "Total Item "
+             << setw(15) << totalQty
+             << "$" << fixed << setprecision(2) << totalVal << "\n";
+        cout << string(60, '-') << "\n";
     }
 
     void saveFile() {
         ofstream file("stock.txt");
         for (auto& p : products) {
-            file << p.code << "|" << p.name << "|" << p.quantity << "|" << p.price << endl;
+            file << p.code << "|" << p.name << "|" << p.quantity << "|" << p.price << "\n";
         }
         file.close();
         cout << "Saved Successfully!\n";
@@ -177,8 +194,8 @@ public:
 
     void loadFile() {
         ifstream file("stock.txt");
-        if (!file) {
-            cout << "No save file found.\n";
+        if (!file.is_open()) {
+            cout << " file not  found !"<<endl; 
             return;
         }
 
@@ -186,9 +203,9 @@ public:
         string code, name, qtyStr, priceStr;
 
         while (getline(file, code, '|') &&
-            getline(file, name, '|') &&
-            getline(file, qtyStr, '|') &&
-            getline(file, priceStr)) {
+               getline(file, name, '|') &&
+               getline(file, qtyStr, '|') &&
+               getline(file, priceStr)) {
 
             int qty = stoi(qtyStr);
             double price = stod(priceStr);
@@ -201,45 +218,51 @@ public:
 
 void menu() {
     cout << "\n========================================\n"
-        << "         STOCK MANAGEMENT SYSTEM\n"
-        << "========================================\n"
-        << "1. Add Product       2. Remove Product\n"
-        << "3. Restock Product   4. Sell Product\n"
-        << "5. Search Product    6. List Products\n"
-        << "7. Save To File      8. Load From File\n"
-        << "9. Exit\n"
-        << "========================================\n"
-        << "Choice: ";
+         << "         STOCK MANAGEMENT SYSTEM\n"
+         << "========================================\n"
+         << "1. Add Product       2. Remove Product\n"
+         << "3. Restock Product   4. Sell Product\n"
+         << "5. Search Product    6. List Products\n"
+         << "7. Save To File      8. Load From File\n"
+         << "9. Exit\n"
+         << "========================================\n"
+         << "Option : ";
 }
 
 int main() {
-    srand(time(NULL));
-
-    StockManager sm;
-    int choice;
+    srand(time(NULL)); 
+ 
+    StockManager s;
+    int op;
+    
 
     do {
         menu();
-        if (!(cin >> choice)) {
-            cout << "\nInvalid Input! Enter a number.\n";
-            cin.clear();
-            cin.ignore(10004, '\n');
-            continue;
-        }
+        cin >> op;
 
-        switch (choice) {
-        case 1: sm.addProduct(); break;
-        case 2: sm.removeProduct(); break;
-        case 3: sm.restockProduct(); break;
-        case 4: sm.sellProduct(); break;
-        case 5: sm.searchProduct(); break;
-        case 6: sm.listProducts(); break;
-        case 7: sm.saveFile(); break;
-        case 8: sm.loadFile(); break;
-        case 9: cout << "\nGoodbye!\n"; break;
-        default: cout << "\nInvalid Choice!\n";
+        switch (op) {
+            case 1: s.addProduct();
+             break;
+            case 2: s.removeProduct();
+             break; 
+            case 3: s.restockProduct();
+             break;
+            case 4: s.sellProduct();
+             break;
+            case 5: s.searchProduct();
+             break;
+            case 6: s.listProducts();
+             break;
+            case 7: s.saveFile(); 
+            break;
+            case 8: s.loadFile();
+             break;
+            case 9: cout << "\nThank You !\n";
+             break;
+            default: cout << "\nInvalid Choice!\n";
         }
-    } while (choice != 9);
+    } while (op != 0);
 
+   
     return 0;
 }
