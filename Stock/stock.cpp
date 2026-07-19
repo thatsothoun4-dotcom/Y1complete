@@ -80,7 +80,7 @@ public:
                 return;
             }
         }
-        cout << "Product Not Found!\n";
+        cout << "Product Not Found!"<<endl; 
     }
 
     void restockProduct() {
@@ -118,12 +118,12 @@ public:
 
 
                 if (amount > p.quantity) {
-                    cout << "Not Enough Stock!\n";
+                    cout << "Not Enough Stock!"<<endl; 
                     return;
                 }
                  // qty of product - ammount 
                 p.quantity -= amount;
-                cout << "Sale Success !\n";
+                cout << "Sale Success !"<<endl; 
                 return;
             }
         }
@@ -141,11 +141,11 @@ public:
                      << "\nProuduct Code:     " << p.code
                      << "\nName:     " << p.name
                      << "\nQuantity: " << p.quantity
-                     << "\nPrice:    $" << fixed << setprecision(2) << p.price << "\n";
+                     << "\nPrice:    $" << fixed << setprecision(2) << p.price << endl; 
                 return;
             }
         }
-        cout << "Product Not Found!\n";
+        cout << "Product Not Found!"<<endl; 
     }
 
     void listProducts() {
@@ -158,7 +158,7 @@ public:
              << setw(15) << "Product Code"
              << setw(20) << "Name"
              << setw(15) << "Quantity"
-             << setw(15) << "Price" << "\n";
+             << setw(15) << "Price" << endl; 
         cout << string(60, '-') << endl; 
 
         int totalQty = 0;
@@ -169,7 +169,7 @@ public:
                  << setw(15) << p.code
                  << setw(20) << p.name
                  << setw(15) << p.quantity
-                 << "$" << fixed << setprecision(2) << p.price << "\n";
+                 << "$" << fixed << setprecision(2) << p.price << endl ;
 
             totalQty += p.quantity;
             totalVal += (p.quantity * p.price);
@@ -179,17 +179,17 @@ public:
         cout << left
              << setw(35) << "Total Item "
              << setw(15) << totalQty
-             << "$" << fixed << setprecision(2) << totalVal << "\n";
-        cout << string(60, '-') << "\n";
+             << "$" << fixed << setprecision(2) << totalVal << endl;
+        cout << string(60, '-') << endl;
     }
 
     void saveFile() {
         ofstream file("stock.txt");
         for (auto& p : products) {
-            file << p.code << "|" << p.name << "|" << p.quantity << "|" << p.price << "\n";
+            file << p.code << "|" << p.name << "|" << p.quantity << "|" << p.price << endl;
         }
         file.close();
-        cout << "Saved Successfully!\n";
+        cout << "Saved Successfully!"<<endl; 
     }
 
     void loadFile() {
@@ -212,7 +212,7 @@ public:
             products.push_back(Product(code, name, qty, price));
         }
         file.close();
-        cout << "Loaded Successfully!\n";
+        cout << "Loaded Successfully!"<<endl; 
     }
 };
 
@@ -257,9 +257,9 @@ int main() {
             break;
             case 8: s.loadFile();
              break;
-            case 9: cout << "\nThank You !\n";
+            case 9: cout << "\nThank You !"<<endl; 
              break;
-            default: cout << "\nInvalid Choice!\n";
+            default: cout << "\nInvalid Choice!"<<endl ; 
         }
     } while (op != 0);
 
